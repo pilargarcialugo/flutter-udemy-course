@@ -52,7 +52,20 @@ class AppTheme {
     dialogTheme: DialogTheme(
       elevation: 20,
       shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(15))
-    )
+    ),
+
+    inputDecorationTheme: const InputDecorationTheme(
+      floatingLabelStyle: TextStyle(color: primaryLight,),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: primaryLight)
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: primaryLight)
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: primaryLight)
+      ),
+    ),
 
   );
 
