@@ -25,12 +25,12 @@ class CardSwiper extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      height: size.height * 0.6,
+      height: size.height * 0.5,
       child: Swiper(
         itemCount: movies.length,
         layout: SwiperLayout.STACK,
-        itemWidth: size.width * 0.5,
-        itemHeight: size.height * 0.5,
+        itemWidth: size.width * 0.6,
+        itemHeight: size.height * 0.4,
         itemBuilder: (_, index) {
           final movie = movies[index];
           movie.heroId = 'swiper-${movie.id}';
