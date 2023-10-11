@@ -7,7 +7,8 @@ The following exercises are developed:
   - products CRUD
   - user login and registration and security with tokens (Firebase)
   - forms validation
-  - utilities for managing camera, gallery and images in the cloud 
+  - utilities for managing camera, gallery and images in the cloud
+- **push_notifications:** Application with push notification management with Firebase
 
 ## References
 Udemy Course: [Legacy - Flutter: Tu guía completa para IOS y Android](https://www.udemy.com/course/flutter-ios-android-fernando-herrera/)
