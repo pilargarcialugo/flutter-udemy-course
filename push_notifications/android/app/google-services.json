@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "93773432276",
+    "firebase_url": "https://flutter-course-a0e61-default-rtdb.firebaseio.com",
+    "project_id": "flutter-course-a0e61",
+    "storage_bucket": "flutter-course-a0e61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93773432276:android:424a47698f5389ac984241",
+        "android_client_info": {
+          "package_name": "com.pgarcia.push_notifications"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpDfdhT8BdcVqqRGq0mg3WEgD_RH8130Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

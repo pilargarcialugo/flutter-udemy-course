@@ -22,6 +22,9 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
 android {
     namespace "com.pgarcia.push_notifications"
     compileSdkVersion flutter.compileSdkVersion
@@ -64,4 +67,3 @@ flutter {
     source '../..'
 }
 
-dependencies {}
