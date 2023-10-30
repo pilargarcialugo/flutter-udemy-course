@@ -35,6 +35,7 @@ class CustomInputField extends StatelessWidget {
       validator: (value) {
         if (value == null) return 'Field required';
         if (value.length < 3) return 'Minimum of 3 letters required';
+        return null;
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(

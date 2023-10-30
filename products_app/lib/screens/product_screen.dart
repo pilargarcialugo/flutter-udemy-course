@@ -129,6 +129,7 @@ class _ProductForm extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'El nombre del producto es requerido';
                   }
+                  return null;
                 },
                 decoration: CustomInputDecoration.authInputDecoration(
                   hintText: 'Nombre del producto', 
