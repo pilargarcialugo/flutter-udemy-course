@@ -13,7 +13,6 @@ The following exercises are developed:
 - **qr_reader:** Example using the barcode reader (flutter_barcode_scanner) and the Google Maps API
 - **user_preferences_app:** Application where user preferences are maintained with Provider and shared_preferences 
 
-
 ## References
 Udemy Course: [Legacy - Flutter: Tu guía completa para IOS y Android](https://www.udemy.com/course/flutter-ios-android-fernando-herrera/)
 
@@ -21,3 +20,6 @@ Udemy Course: [Legacy - Flutter: Tu guía completa para IOS y Android](https://w
 # Advanced Flutter Course
 The following exercises are developed:
 - **sockets_votes_app:** Votes or pool app using Socket Server
+
+## References
+Udemy Course: [Flutter Avanzado: Lleva tu conocimiento al siguiente nivel](https://www.udemy.com/course/flutter-avanzado-fernando-herrera/)
