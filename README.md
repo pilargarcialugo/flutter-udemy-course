@@ -1,8 +1,8 @@
 # Basic Flutter Course
 The following exercises are developed:
-- **counter_app:** Counter app. Initial handling of Dart data types and classes, Widgets, code organization, BuildContext and Scaffold, Columns, Buttons, StatelessWidget and StatefulWidget
-- **fl_components:** Exercises to include ListView components, ListTiles, route handling (AppRouter), CardWidget, image handling, alerts, forms, Infinite Scroll
-- **movies_app:** Movie application that shows the movies that are in theaters with their details and a search engine. AppBar, Slivers, HTTP Requests, Infinite Scroll, SearchDelegate, Hero Animation, Futures and Streams components are included. Also icons
+- **[counter_app](basic/counter_app/):** Counter app. Initial handling of Dart data types and classes, Widgets, code organization, BuildContext and Scaffold, Columns, Buttons, StatelessWidget and StatefulWidget
+- **[fl_components](basic/fl_components/):** Exercises to include ListView components, ListTiles, route handling (AppRouter), CardWidget, image handling, alerts, forms, Infinite Scroll
+- **[movies_app](basic/movies_app/):** Movie application that shows the movies that are in theaters with their details and a search engine. AppBar, Slivers, HTTP Requests, Infinite Scroll, SearchDelegate, Hero Animation, Futures and Streams components are included. Also icons
 - **[news_provider_app](basic/news_provider_app/):** News application using Provider as state manager
 - **[products_app](basic/products_app/):** Product management app. It is included:
   - products CRUD
