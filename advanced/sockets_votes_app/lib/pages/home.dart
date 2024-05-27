@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         color: Colors.red[300],
         child: const Align(
           alignment: Alignment.centerLeft,
-          child: Icon(Icons.delete_outlined)
+          child: Icon(Icons.delete_outlined, color: Colors.white),
         ),
       ),
       child: ListTile(
@@ -74,28 +74,6 @@ class _HomePageState extends State<HomePage> {
     return showAndroidDialog(textController);
   }
 
-  Future<dynamic> showAndroidDialog(TextEditingController textController) {
-    return showDialog(
-      context: context, 
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Option: '),
-          content: TextField(
-            controller: textController,
-          ),
-          actions: [
-            MaterialButton(
-              elevation: 5,
-              textColor: Colors.blue,
-              onPressed: () => addToList(textController.text),
-              child: const Text('Add'),
-            )
-          ],
-        );
-      },
-    );
-  }
-
   Future<dynamic> showIosDialog(TextEditingController textController) {
     return showCupertinoDialog(
       context: context, 
@@ -115,6 +93,28 @@ class _HomePageState extends State<HomePage> {
               isDestructiveAction: true,
               child: const Text('Cancel'),
               onPressed: () => Navigator.pop(context),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Future<dynamic> showAndroidDialog(TextEditingController textController) {
+    return showDialog(
+      context: context, 
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Option: '),
+          content: TextField(
+            controller: textController,
+          ),
+          actions: [
+            MaterialButton(
+              elevation: 5,
+              textColor: Colors.blue,
+              onPressed: () => addToList(textController.text),
+              child: const Text('Add'),
             )
           ],
         );
