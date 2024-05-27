@@ -1,4 +1,6 @@
-# Basic Flutter Course
+# Flutter Course
+
+## Basic 
 The following exercises are developed:
 - **[counter_app](basic/counter_app/):** Counter app. Initial handling of Dart data types and classes, Widgets, code organization, BuildContext and Scaffold, Columns, Buttons, StatelessWidget and StatefulWidget
 - **[fl_components](basic/fl_components/):** Exercises to include ListView components, ListTiles, route handling (AppRouter), CardWidget, image handling, alerts, forms, Infinite Scroll
@@ -13,13 +15,14 @@ The following exercises are developed:
 - **[qr_reader](basic/qr_reader/):** Example using the barcode reader (flutter_barcode_scanner) and the Google Maps API
 - **[user_preferences_app](basic/user_preferences_app/):** Application where user preferences are maintained with Provider and shared_preferences 
 
-## References
+### References
 Udemy Course: [Legacy - Flutter: Tu guía completa para IOS y Android](https://www.udemy.com/course/flutter-ios-android-fernando-herrera/)
 
 
-# Advanced Flutter Course
+## Advanced
 The following exercises are developed:
 - **[sockets_votes_app](advanced/sockets_votes_app/):** Votes or pool app using Socket Server
+- **[sockets_votes_app_server](advanced/sockets_votes_app_server/):** Votes or pool app **server** using Socket Server
 
 ## References
 Udemy Course: [Flutter Avanzado: Lleva tu conocimiento al siguiente nivel](https://www.udemy.com/course/flutter-avanzado-fernando-herrera/)
