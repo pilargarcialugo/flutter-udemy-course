@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
 import 'package:sockets_votes_app/models/models.dart';
+import 'package:sockets_votes_app/services/socket_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,23 +15,58 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Option> options = [
-    Option(id: '1', name: 'One', votes: 5),
-    Option(id: '2', name: 'Two', votes: 2),
-    Option(id: '3', name: 'Three', votes: 0),
-    Option(id: '4', name: 'Four', votes: 1),
-  ];
+  List<Option> options = [];
+
+  @override
+  void initState() {
+    final socketService = Provider.of<SocketService>(context, listen: false);
+    socketService.socket.on('available-options', _handleAvailableOptions);
+    super.initState();
+  }
+
+  _handleAvailableOptions(dynamic data) {
+    options = (data as List)
+      .map((op) => Option.fromMap(op))
+      .toList();
+
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    final socketService = Provider.of<SocketService>(context, listen: false);
+    socketService.socket.off('available-options');
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final socketService = Provider.of<SocketService>(context);
+    
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
-        title: const Text('Vote App'),
+        backgroundColor: Colors.white,
+        title: const Text('Votes App', style: TextStyle(color: Colors.black87),),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: socketService.serverStatus == ServerStatus.online 
+            ? Icon(Icons.check_circle_outline, color: Colors.blue[300],)
+            : const Icon(Icons.offline_bolt, color: Colors.red,),
+          )
+        ],
       ),
-      body: ListView.builder(
-        itemCount: options.length,
-        itemBuilder: (context, index) => _buildOptionsListView(options[index]),        
+      body: Column(
+        children: [
+          _buildOptionsDiagram(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: options.length,
+              itemBuilder: (context, index) => _buildOptionsListView(options[index]),        
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 1,
@@ -39,12 +77,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildOptionsListView(Option option) {
+    final socketService = Provider.of<SocketService>(context, listen: false);
+
     return Dismissible(
       key: Key(option.id),
       direction: DismissDirection.startToEnd,
-      onDismissed: (direction) {
-        // TODO delete on server
-      },
+      onDismissed: (_) => socketService.socket.emit('delete-option', {'id': option.id}),
       background: Container(
         padding: const EdgeInsets.only(left: 25),
         color: Colors.red[300],
@@ -59,18 +97,16 @@ class _HomePageState extends State<HomePage> {
         ),
         title: Text(option.name),
         trailing: Text('${option.votes}', style: const TextStyle(fontSize: 18, color: Colors.blueGrey),),
-        onTap: () {
-          
-        },
+        onTap: () => socketService.socket.emit('vote-option', {'id': option.id}),
       ),
     );
   }
 
   addOption() {
     final textController = TextEditingController();
-    if (Platform.isIOS) {
-      return showIosDialog(textController);
-    } 
+    // if (Platform.isIOS) {
+    //   return showIosDialog(textController);
+    // } 
     return showAndroidDialog(textController);
   }
 
@@ -103,7 +139,7 @@ class _HomePageState extends State<HomePage> {
   Future<dynamic> showAndroidDialog(TextEditingController textController) {
     return showDialog(
       context: context, 
-      builder: (context) {
+      builder: (_) {
         return AlertDialog(
           title: const Text('Option: '),
           content: TextField(
@@ -124,9 +160,26 @@ class _HomePageState extends State<HomePage> {
 
   addToList(String optionName) {
     if (optionName.length > 1) {
-      options.add(Option(id: DateTime.now().toString(), name: optionName, votes: 0));
-      setState(() {});
+      final socketService = Provider.of<SocketService>(context, listen: false);
+      socketService.socket.emit('add-option', {'name': optionName});
     }
     Navigator.pop(context);
   }
+  
+  Widget _buildOptionsDiagram() {
+    final Map<String, double> dataMap = {for (Option option in options) option.name: option.votes.toDouble()};
+
+    if (dataMap.isEmpty) {
+      return const Center(
+        child: Text('No data available'),
+      );
+    }
+
+    return Container(
+      width: double.infinity,
+      height: 200,
+      padding: const EdgeInsets.only(top: 10),
+      child: PieChart(dataMap: dataMap),
+    );
+    }
 }
