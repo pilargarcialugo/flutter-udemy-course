@@ -24,6 +24,7 @@ The following exercises are developed:
 - **[sockets_votes_app](advanced/sockets_votes_app/):** Votes or pool app using Socket Server
 - **[sockets_votes_app_server](advanced/sockets_votes_app_server/):** Votes or pool app **server** using Socket Server
 - **[chat_app](advanced/chat_app/):** Real time chat app using sockets, JSON Web Token and MongoDB
+- **[chat_app_server](advanced/chat_app_server/):** Chat app **server** using sockets, JSON Web Token and MongoDB
 
 ### References
 Udemy Course: [Flutter Avanzado: Lleva tu conocimiento al siguiente nivel](https://www.udemy.com/course/flutter-avanzado-fernando-herrera/)
