@@ -1,8 +1,11 @@
+import 'package:chat_app/helpers/custom_alert.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_input.dart';
 import 'package:chat_app/widgets/custom_labels.dart';
 import 'package:chat_app/widgets/custom_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -52,6 +55,8 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -59,25 +64,40 @@ class __FormState extends State<_Form> {
         children: [
           CustomInput(
             icon: Icons.perm_identity_outlined,
-            hintText: 'Name',
+            hintText: 'Nombre',
             textController: nameController,
             keyboardType: TextInputType.name,
           ),
           CustomInput(
             icon: Icons.email_outlined,
-            hintText: 'Email',
+            hintText: 'Correo',
             textController: emailController,
             keyboardType: TextInputType.emailAddress,
           ),
           CustomInput(
             icon: Icons.lock_outline,
-            hintText: 'Password',
+            hintText: 'Contraseña',
             textController: passwordController,
             isPassword: true,
           ),
           CustomButton(
             buttonText: 'Registrarse',
-            onPressed: () => print('Regisssss'),
+            onPressed: authService.registering 
+              ? null 
+              : () async {
+                FocusScope.of(context).unfocus();
+                final successfulRegister = await authService.register(
+                  nameController.text.trim(),
+                  emailController.text.trim(),
+                  passwordController.text.trim(),
+                );
+
+                if (successfulRegister == true) {
+                  Navigator.pushReplacementNamed(context, 'users');
+                } else {
+                  showAlert(context, 'Error', '$successfulRegister');
+                }
+              },
           )
         ],
       ),

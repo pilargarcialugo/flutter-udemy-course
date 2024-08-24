@@ -1,8 +1,12 @@
+import 'package:chat_app/helpers/custom_alert.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_input.dart';
 import 'package:chat_app/widgets/custom_labels.dart';
 import 'package:chat_app/widgets/custom_logo.dart';
-import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -51,6 +55,8 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -58,19 +64,33 @@ class __FormState extends State<_Form> {
         children: [
           CustomInput(
             icon: Icons.email_outlined,
-            hintText: 'Email',
+            hintText: 'Correo',
             textController: emailController,
             keyboardType: TextInputType.emailAddress,
           ),
           CustomInput(
             icon: Icons.lock_outline,
-            hintText: 'Password',
+            hintText: 'Contraseña',
             textController: passwordController,
             isPassword: true,
           ),
           CustomButton(
             buttonText: 'Iniciar sesión',
-            onPressed: () => print('hell'),
+            onPressed: authService.loggingIn 
+              ? null 
+              : () async {
+                FocusScope.of(context).unfocus();
+                final successfulLogin = await authService.login(
+                  emailController.text.trim(),
+                  passwordController.text.trim(),
+                );
+
+                if (successfulLogin) {
+                  Navigator.pushReplacementNamed(context, 'users');
+                } else {
+                  showAlert(context, 'Error', 'Usuario y/o contraseña inválido');
+                }
+              },
           )
         ],
       ),

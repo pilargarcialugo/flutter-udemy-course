@@ -1,4 +1,6 @@
+import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:chat_app/models/user.dart';
 
@@ -10,26 +12,30 @@ class UsersPage extends StatefulWidget {
 }
 
 class _UsersPageState extends State<UsersPage> {
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
       
   final users = [
-    User(uuid: '1', name: 'Marcos', email: 'marcosrml@gmail.com', online: true),
-    User(uuid: '2', name: 'Elena', email: 'elena2628@gmail.com', online: false),
-    User(uuid: '3', name: 'Gabriel', email: 'gaboluares@gmail.com', online: true),
-    User(uuid: '4', name: 'Marcela', email: 'marcejklm@gmail.com', online: true),
+    User(uid: '1', name: 'Marcos', email: 'marcosrml@gmail.com', online: true),
+    User(uid: '2', name: 'Elena', email: 'elena2628@gmail.com', online: false),
+    User(uid: '3', name: 'Gabriel', email: 'gaboluares@gmail.com', online: true),
+    User(uid: '4', name: 'Marcela', email: 'marcejklm@gmail.com', online: true),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    final user = authService.user;
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mi nombre', style: TextStyle(color: Colors.black87),),
+        title: Text(user?.name ?? 'Sin nombre', style: const TextStyle(color: Colors.black87),),
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
-            
+            Navigator.popAndPushNamed(context, 'login');
+            AuthService.deleteToken();
           }, 
           icon: const Icon(Icons.exit_to_app_outlined, color: Colors.black87)
         ),

@@ -10,8 +10,8 @@ const createUser = async (req, res = response) => {
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
             return res.status(400).json({
-                ok: false,
-                msg: "Invalid email"
+                sucess: false,
+                message: "Invalid email"
             });
         }
 
@@ -22,15 +22,15 @@ const createUser = async (req, res = response) => {
         const token = await generateJwt(user.id);
 
         return res.json({
-            ok: true,
+            sucess: true,
             user,
             token
         });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            ok: false,
-            msg: "Internal server error"
+            sucess: false,
+            message: "Internal server error"
         });
     }
 }
@@ -42,30 +42,30 @@ const loginUser = async (req, res = response) => {
         const dbUser = await User.findOne({ email });
         if (!dbUser) {
             return res.status(404).json({
-                ok: false,
-                msg: "Invalid credentials"
+                sucess: false,
+                message: "Invalid credentials"
             });
         }
         
         const validPassword = bcrypt.compareSync(password, dbUser.password);
         if (!validPassword) {
             return res.status(400).json({
-                ok: false,
-                msg: "Invalid credentials"
+                sucess: false,
+                message: "Invalid credentials"
             });
         }
 
         const token = await generateJwt(dbUser.id);
         return res.json({
-            ok: true,
-            dbUser,
+            sucess: true,
+            user: dbUser,
             token
         });
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            ok: false,
-            msg: "Internal server error"
+            sucess: false,
+            message: "Internal server error"
         });
     }
 }
@@ -76,8 +76,8 @@ const refreshToken = async (req, res = response) => {
     const token = await generateJwt(uid);
 
     return res.json({
-        ok: true,
-        dbUser,
+        sucess: true,
+        user: dbUser,
         token
     });
 }

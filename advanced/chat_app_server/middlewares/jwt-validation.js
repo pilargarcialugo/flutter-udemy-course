@@ -4,8 +4,8 @@ const validateToken = (req, res, next) => {
     const token = req.header('x-token');
     if (!token) {
         res.status(401).json({
-            ok: false,
-            msg: 'Invalid token'
+            sucess: false,
+            message: 'Invalid token'
         });
     }
 
@@ -15,8 +15,8 @@ const validateToken = (req, res, next) => {
         next();
     } catch (error) {
         res.status(401).json({
-            ok: false,
-            msg: 'Invalid token'
+            sucess: false,
+            message: 'Invalid token'
         });
     }
 }
