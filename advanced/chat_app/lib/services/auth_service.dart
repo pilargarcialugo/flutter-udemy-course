@@ -40,6 +40,7 @@ class AuthService with ChangeNotifier {
 
   Future<bool> login(String email, String password) async {
     loggingIn = true;
+    print('${Environment.apiUrl}/login');
 
     final data = {
       'email': email,
@@ -55,11 +56,10 @@ class AuthService with ChangeNotifier {
     loggingIn = false;
     if (res.statusCode == HttpStatus.ok) {
       final loginResponse = loginResponseFromJson(res.body);
-      if (loginResponse.sucess) {
-        user = loginResponse.user;
-        await _saveToken(loginResponse.token);
-      } 
-      return loginResponse.sucess;
+      print('Response $loginResponse');
+      user = loginResponse.user;
+      await _saveToken(loginResponse.token);
+      return true;
     } else {
       return false;
     }
@@ -88,6 +88,7 @@ class AuthService with ChangeNotifier {
     if (res.statusCode == HttpStatus.ok) {
       final registerResponse = loginResponseFromJson(res.body);
       if (registerResponse.sucess) {
+        user = registerResponse.user;
         await _saveToken(registerResponse.token);
       } 
       return registerResponse.sucess;
@@ -101,18 +102,19 @@ class AuthService with ChangeNotifier {
   }
 
   Future<bool> isLoggedIn() async {
-    final token = await _storage.read(key: 'token');
+    final token = await _storage.read(key: 'token') ?? '';
     final res = await http.get(
       Uri.parse('${Environment.apiUrl}/login/token/refresh'),
       headers: {
         'Content-Type': 'application/json',
-        'x-token': token ?? ''
+        'x-token': token
       }
     );
     
     if (res.statusCode == HttpStatus.ok) {
       final refreshResponse = loginResponseFromJson(res.body);
       if (refreshResponse.sucess) {
+        user = refreshResponse.user;
         await _saveToken(refreshResponse.token);
       } 
       return refreshResponse.sucess;

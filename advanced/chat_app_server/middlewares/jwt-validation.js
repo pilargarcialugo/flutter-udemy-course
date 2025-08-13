@@ -7,17 +7,17 @@ const validateToken = (req, res, next) => {
             sucess: false,
             message: 'Invalid token'
         });
-    }
-
-    try {
-        const { uid } = jwt.verify(token, process.env.JWT_KEY);
-        req.uid = uid;
-        next();
-    } catch (error) {
-        res.status(401).json({
-            sucess: false,
-            message: 'Invalid token'
-        });
+    } else {
+        try {
+            const { uid } = jwt.verify(token, process.env.JWT_KEY);
+            req.uid = uid;
+            next();
+        } catch (error) {
+            res.status(401).json({
+                sucess: false,
+                message: 'Invalid token'
+            });
+        }
     }
 }
 
